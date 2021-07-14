@@ -41,6 +41,7 @@
         <td colspan="2">
           <input type="button" value="Save" onclick="save_user();" />
           <input type="button" value="Update" onclick="update_user();" />
+          <input type="button" value="Delete" onclick="delete_user();" />
         </td>
       </tr>
     </table>
@@ -120,6 +121,19 @@
       }
       //Termina función actualizar
       
+      //Inicia función eliminar
+      function delete_user() {
+        var user_id = document.getElementById("user_id").value;
+
+        firebase
+          .database()
+          .ref()
+          .child("/users/" + user_id)
+          .remove();
+        alert("The user is deleted successfully!");
+        reload_page();
+      }
+      //Termina función eliminar
       
 
 
