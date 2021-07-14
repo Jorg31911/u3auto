@@ -41,7 +41,6 @@
         <td colspan="2">
           <input type="button" value="Save" onclick="save_user();" />
           <input type="button" value="Update" onclick="update_user();" />
-          <input type="button" value="Delete" onclick="delete_user();" />
         </td>
       </tr>
     </table>
@@ -100,6 +99,30 @@
         reload_page();
       }
       //Termina función agregar
+
+      //Inicia función actualizar
+      function update_user() {
+        var user_name = document.getElementById("user_name").value;
+        var user_id = document.getElementById("user_id").value;
+
+        var data = {
+          user_id: user_id,
+          user_name: user_name,
+        };
+
+        var updates = {};
+        updates["/users/" + user_id] = data;
+        firebase.database().ref().update(updates);
+
+        alert("The user is updated successfully!");
+
+        reload_page();
+      }
+      //Termina función actualizar
+      
+      
+
+
 
 
      
