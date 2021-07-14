@@ -37,7 +37,13 @@
         <td>User Name:</td>
         <td><input type="text" name="user_name" id="user_name" /></td>
       </tr>
-     
+      <tr>
+        <td colspan="2">
+          <input type="button" value="Save" onclick="save_user();" />
+          <input type="button" value="Update" onclick="update_user();" />
+          <input type="button" value="Delete" onclick="delete_user();" />
+        </td>
+      </tr>
     </table>
           <!-- Termina tabla-->
           <!--Inicia listado de registros-->
@@ -75,7 +81,25 @@
         });
       });
       //Terminaa conexión a la base de datps en tiempo real de firebase
+      //Inicia función agregar
+      function save_user() {
+        var user_name = document.getElementById("user_name").value;
 
+        var uid = firebase.database().ref().child("users").push().key;
+
+        var data = {
+          user_id: uid,
+          user_name: user_name,
+        };
+
+        var updates = {};
+        updates["/users/" + uid] = data;
+        firebase.database().ref().update(updates);
+
+        alert("The user is created successfully!");
+        reload_page();
+      }
+      //Termina función agregar
 
 
      
