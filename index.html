@@ -1,6 +1,90 @@
 <html>
-  <body>
-  Hola
+
+<head>
+	<title>Firebase Realtime Database</title>
+	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js">
+
+	</script>
+	<script>
+		//Credenciales Firebase 
+      //Firebase
+      var config = {
+        apiKey: "AIzaSyANYkFiogOoPWTOrF8bLScHPzMM7w021k4",
+        authDomain: "crud-auto.firebaseapp.com",
+        databaseURL: "https://crud-auto-default-rtdb.firebaseio.com",
+        projectId: "crud-auto",
+        storageBucket: "crud-auto.appspot.com",
+        messagingSenderId: "1011552048150",
+        appId: "1:1011552048150:web:6c38e768ba5f4a69cf9137",
+      };
+      firebase.initializeApp(config);
+    //Termina Credenciales Firebase
+	</script>
+</head>
+
+<body>
+	<!-- CSS  -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	 crossorigin="anonymous" />
+	<!-- Termina CSS-->
+	<!-- Inicia Tabla para agregar usuario-->
+	<table>
+		<tr>
+			<td>Id:</td>
+			<td><input type="text" name="id" id="user_id" /></td>
+      </tr>
+      <tr>
+        <td>User Name:</td>
+        <td><input type="text" name="user_name" id="user_name" /></td>
+      </tr>
+     
+    </table>
+          <!-- Termina tabla-->
+          <!--Inicia listado de registros-->
+    <h3>Users List</h3>
+
+    <table id="tbl_users_list" border="1">
+      <tr>
+        <td>#ID</td>
+        <td>NAME</td>
+      </tr>
+    </table>
+          <!-- Termina lsistado de registros-->
+    <!-- Inicia script-->
+    <script>
+      //Inicia función listar
+      var tblUsers = document.getElementById("tbl_users_list");
+      //Termina función listar
+
+      //Conexión a la base de datps en tiempo real de firebase
+      var databaseRef = firebase.database().ref("users/");
+      var rowIndex = 1;
+
+      databaseRef.once("value", function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+
+          var row = tblUsers.insertRow(rowIndex);
+          var cellId = row.insertCell(0);
+          var cellName = row.insertCell(1);
+          cellId.appendChild(document.createTextNode(childKey));
+          cellName.appendChild(document.createTextNode(childData.user_name));
+
+          rowIndex = rowIndex + 1;
+        });
+      });
+      //Terminaa conexión a la base de datps en tiempo real de firebase
+
+
+
+     
+
+      
+
+     
+    </script>
+    <!-- Termina script-->
+
   </body>
-j
 </html>
