@@ -1,151 +1,26 @@
-<html>
+<meta charset="UTF-8">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="pagina/static/css/main.css">
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
 
-<head>
-	<title>Firebase Realtime Database</title>
-	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js">
-
-	</script>
-	<script>
-		//Credenciales Firebase 
-      //Firebase
-      var config = {
-        apiKey: "AIzaSyANYkFiogOoPWTOrF8bLScHPzMM7w021k4",
-        authDomain: "crud-auto.firebaseapp.com",
-        databaseURL: "https://crud-auto-default-rtdb.firebaseio.com",
-        projectId: "crud-auto",
-        storageBucket: "crud-auto.appspot.com",
-        messagingSenderId: "1011552048150",
-        appId: "1:1011552048150:web:6c38e768ba5f4a69cf9137",
-      };
-      firebase.initializeApp(config);
-    //Termina Credenciales Firebase
-	</script>
-</head>
-
-<body>
-	<!-- CSS  -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	 crossorigin="anonymous" />
-	<!-- Termina CSS-->
-	<!-- Inicia Tabla para agregar usuario-->
-	<table>
-		<tr>
-			<td>Id:</td>
-			<td><input type="text" name="id" id="user_id" /></td>
-      </tr>
-      <tr>
-        <td>User Name:</td>
-        <td><input type="text" name="user_name" id="user_name" /></td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input type="button" value="Save" onclick="save_user();" />
-          <input type="button" value="Update" onclick="update_user();" />
-          <input type="button" value="Delete" onclick="delete_user();" />
-        </td>
-      </tr>
-    </table>
-          <!-- Termina tabla-->
-          <!--Inicia listado de registros-->
-    <h3>Users List</h3>
-
-    <table id="tbl_users_list" border="1">
-      <tr>
-        <td>#ID</td>
-        <td>NAME</td>
-      </tr>
-    </table>
-          <!-- Termina lsistado de registros-->
-    <!-- Inicia script-->
-    <script>
-      //Inicia función listar
-      var tblUsers = document.getElementById("tbl_users_list");
-      //Termina función listar
-
-      //Conexión a la base de datps en tiempo real de firebase
-      var databaseRef = firebase.database().ref("users/");
-      var rowIndex = 1;
-
-      databaseRef.once("value", function (snapshot) {
-        snapshot.forEach(function (childSnapshot) {
-          var childKey = childSnapshot.key;
-          var childData = childSnapshot.val();
-
-          var row = tblUsers.insertRow(rowIndex);
-          var cellId = row.insertCell(0);
-          var cellName = row.insertCell(1);
-          cellId.appendChild(document.createTextNode(childKey));
-          cellName.appendChild(document.createTextNode(childData.user_name));
-
-          rowIndex = rowIndex + 1;
-        });
-      });
-      //Terminaa conexión a la base de datps en tiempo real de firebase
-      //Inicia función agregar
-      function save_user() {
-        var user_name = document.getElementById("user_name").value;
-
-        var uid = firebase.database().ref().child("users").push().key;
-
-        var data = {
-          user_id: uid,
-          user_name: user_name,
-        };
-
-        var updates = {};
-        updates["/users/" + uid] = data;
-        firebase.database().ref().update(updates);
-
-        alert("The user is created successfully!");
-        reload_page();
-      }
-      //Termina función agregar
-
-      //Inicia función actualizar
-      function update_user() {
-        var user_name = document.getElementById("user_name").value;
-        var user_id = document.getElementById("user_id").value;
-
-        var data = {
-          user_id: user_id,
-          user_name: user_name,
-        };
-
-        var updates = {};
-        updates["/users/" + user_id] = data;
-        firebase.database().ref().update(updates);
-
-        alert("The user is updated successfully!");
-
-        reload_page();
-      }
-      //Termina función actualizar
+    <!-- Login Form -->
+    <form>
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
       
-      //Inicia función eliminar
-      function delete_user() {
-        var user_id = document.getElementById("user_id").value;
+      <a class="btn btn-primary btn-lg" href="pagina/main.html" role="button">Ingresar</a>
+    </form>
 
-        firebase
-          .database()
-          .ref()
-          .child("/users/" + user_id)
-          .remove();
-        alert("The user is deleted successfully!");
-        reload_page();
-      }
-      //Termina función eliminar
-       //Función actualizar cada que se desencadena un cambio
-      function reload_page() {
-        window.location.reload();
-      }
-      
-      
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">¿Olvidó su contraseña?</a>
+    </div>
 
-      
-
-     
-    </script>
-    <!-- Termina script-->
-
-  </body>
-</html>
+  </div>
+</div>
