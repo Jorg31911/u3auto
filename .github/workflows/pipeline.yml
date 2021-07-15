@@ -51,7 +51,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           resource-group: rg-pipelines
-          cluster-name: handsonaks
+          cluster-name: pruebaauto
       - name: Helm upgrade
         run: |
           helm upgrade website Chapter15/website --install \
